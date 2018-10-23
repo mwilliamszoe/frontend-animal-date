@@ -17,6 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (event.target.dataset.name == "logout") {
       document.getElementById("all-users").innerHTML = "";
       getData();
+    } else if (event.target.dataset.name == "viewpets") {
+      // document.getElementById("pets").innerHTML += ``;
+      getUserPets(event.target.dataset.id);
     }
   });
 });
@@ -54,22 +57,29 @@ function newUser(data) {
 function homePage(id) {
   fetch(`http://localhost:3000/users/${id}`)
     .then(response => response.json())
-    .then(user => displayHomePage(user))
-    .then();
+    .then(user => displayHomePage(user));
 }
 
 function displayHomePage(user) {
-  pets = user.pets;
-  debugger;
   document.getElementById("all-users").innerHTML = "";
   add = document.getElementById("all-users");
   add.innerHTML += `<h2>${user.name}</h2>
+  <button data-name="viewpets" data-id="${user.id}">View Pets</button>
   <button data-name="logout">Logout</button>`;
 }
 
 // ----------------------------------------------------------------------
 
-function getUserPets() {
-  ["hello", "hello"].map(element => element);
+function getUserPets(id) {
+  fetch(`http://localhost:3000/pets`)
+    .then(response => response.json())
+    .then(pets => pets.forEach(pet => displayUserPets(pet, id)));
 }
+
+function displayUserPets(pet, id) {
+  if (pet.id == id) {
+    document.getElementById("pets").innerHTML += `<ul>${pet.name}</ul>`;
+  }
+}
+
 // ----------------------------------------------------------------------
