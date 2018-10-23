@@ -1,8 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   getData();
+  let newuser = false;
   document.addEventListener("click", e => {
     e.preventDefault();
-    if (event.target.dataset.name == "submit") {
+    if (event.target.dataset.name == "usersubmit") {
+      debugger;
       newUserName = document.getElementById("new-user").childNodes[1]
         .childNodes[5].value;
       data = {
@@ -16,10 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
       homePage(userid);
     } else if (event.target.dataset.name == "logout") {
       document.getElementById("all-users").innerHTML = "";
+      document.getElementById("pets").innerHTML = "";
       getData();
-    } else if (event.target.dataset.name == "viewpets") {
-      // document.getElementById("pets").innerHTML += ``;
-      getUserPets(event.target.dataset.id);
+    } else if (event.target.dataset.name == "petsubmit") {
+      newPet();
     }
   });
 });
@@ -62,9 +64,9 @@ function homePage(id) {
 
 function displayHomePage(user) {
   document.getElementById("all-users").innerHTML = "";
+  getUserPets(user.id);
   add = document.getElementById("all-users");
   add.innerHTML += `<h2>${user.name}</h2>
-  <button data-name="viewpets" data-id="${user.id}">View Pets</button>
   <button data-name="logout">Logout</button>`;
 }
 
@@ -78,8 +80,49 @@ function getUserPets(id) {
 
 function displayUserPets(pet, id) {
   if (pet.id == id) {
-    document.getElementById("pets").innerHTML += `<ul>${pet.name}</ul>`;
+    document.getElementById("pets").innerHTML += `<p>${pet.name}</p>`;
   }
+}
+// ----------------------------------------------------------------------
+
+function newPet() {
+  data = {
+    name: event.target.parentElement.childNodes[1].childNodes[5].value,
+    species: event.target.parentElement.childNodes[1].childNodes[9].value,
+    user_id: event.target.parentElement.childNodes[1].childNodes[13].value
+  };
+  debugger;
+  fetch("http://localhost:3000/pets", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify(data)
+  });
 }
 
 // ----------------------------------------------------------------------
+
+// addBtn.addEventListener("click", () => {
+//   // hide & seek with the form
+//   // newuser = !newuser;
+//   if (newuser) {
+//     formgroup.style.display = "block";
+//     // submit listener
+//     let newuser = document.querySelector(".add-toy-form");
+//     newuser.addEventListener("submit", function(event) {
+//       // event.preventDefault()
+
+//       let data = {
+//         name: event.target.name.value,
+//         image: event.target.image.value,
+//         likes: 0
+//       };
+
+//       postData(`http://localhost:3000/toys`, data);
+//     });
+//   } else {
+//     toyForm.style.display = "none";
+//   }
+// });
