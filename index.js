@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   getData();
   addUserForm();
-  // let newuser = false;
   document.addEventListener("click", e => {
     e.preventDefault();
     if (event.target.dataset.name == "usersubmit") {
@@ -17,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (event.target.dataset.name == "homePage") {
       userid = event.target.dataset.id;
       document.getElementById("userform").innerHTML = ``;
+      document.getElementById("pets").innerHTML = ``;
       homePage(userid);
     } else if (event.target.dataset.name == "logout") {
       addUserForm();
@@ -29,6 +29,21 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("petsform").innerHTML = ``;
       document.getElementById("pets").innerHTML = ``;
       newPet(id);
+    } else if (event.target.dataset.name == "profile") {
+      document.getElementById("pets").innerHTML = "";
+      getPetProfile(event.target.dataset.id);
+    } else if (event.target.dataset.name == "back") {
+      document.getElementById("pets").innerHTML = "";
+      document.getElementById("petsform").innerHTML = ``;
+      document.getElementById("matchpets").innerHTML = "";
+      homePage(userid);
+    } else if (event.target.dataset.name == "match") {
+      id = event.target.dataset.id;
+      getAllPets(id);
+    } else if (event.target.dataset.name == `matchprofile`) {
+      document.getElementById("matchpets").innerHTML = "";
+      id = event.target.dataset.id;
+      getPetProfile(id);
     }
   });
 });
@@ -78,6 +93,41 @@ function addPetsForm(id) {
 
 // ----------------------------------------------------------------------
 
+function getPetProfile(id) {
+  fetch(`http://localhost:3000/pets/${id}`)
+    .then(response => response.json())
+    .then(pet => viewPetProfile(pet, id));
+}
+function viewPetProfile(pet, id) {
+  if (pet.id == id) {
+    document.getElementById("pets").innerHTML += `<h2>${pet.name}</h2>
+    <p>Hi! My name is ${pet.name}</p>
+    <button data-id="${pet.id}" data-name="match">Match ${
+      pet.name
+    } with local pets</button>
+    <button data-name="back">back</buttom>`;
+  }
+}
+
+function getAllPets(id) {
+  fetch(`http://localhost:3000/pets`)
+    .then(response => response.json())
+    .then(pets => pets.forEach(pet => displayAllPets(pet, id)));
+}
+function displayAllPets(pet, id) {
+  if (pet.id != id) {
+    add = document.getElementById("matchpets");
+    add.innerHTML += `<h3>
+    ${pet.name}
+    <button data-name="like">Like ❤️</button>
+    <button data-id="${pet.id}"data-name="matchprofile">View</button>
+    </h3>
+    `;
+  }
+}
+
+// ----------------------------------------------------------------------
+
 function newUser(data) {
   fetch("http://localhost:3000/users", {
     method: "POST",
@@ -101,7 +151,7 @@ function displayHomePage(user) {
   getUserPets(user.id);
   addPetsForm(user.id);
   add = document.getElementById("all-users");
-  add.innerHTML += `<h2>${user.name}</h2>
+  add.innerHTML += `<h1>${user.name}</h1>
   <button data-name="logout">Logout</button>`;
 }
 
@@ -115,7 +165,10 @@ function getUserPets(id) {
 
 function displayUserPets(pet, id) {
   if (pet.user_id == id) {
-    document.getElementById("pets").innerHTML += `<p>${pet.name}</p>`;
+    document.getElementById("pets").innerHTML += `<p>${pet.name}</p>
+    <button data-id='${pet.id}' 
+    data-name="profile">${pet.name}'s profile</button>
+    `;
   }
 }
 // ----------------------------------------------------------------------
@@ -137,26 +190,3 @@ function newPet(id) {
 }
 
 // ----------------------------------------------------------------------
-
-// addBtn.addEventListener("click", () => {
-//   // hide & seek with the form
-//   // newuser = !newuser;
-//   if (newuser) {
-//     formgroup.style.display = "block";
-//     // submit listener
-//     let newuser = document.querySelector(".add-toy-form");
-//     newuser.addEventListener("submit", function(event) {
-//       // event.preventDefault()
-
-//       let data = {
-//         name: event.target.name.value,
-//         image: event.target.image.value,
-//         likes: 0
-//       };
-
-//       postData(`http://localhost:3000/toys`, data);
-//     });
-//   } else {
-//     toyForm.style.display = "none";
-//   }
-// });
