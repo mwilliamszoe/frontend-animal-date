@@ -84,3 +84,7 @@ function displayUserPets(pet, id) {
 }
 
 // ----------------------------------------------------------------------
+
+// when login is clicked for new user
+// the event listener for the new user form changes so that
+// newUser form makes a post request to dogs
