@@ -1,3 +1,5 @@
-fetch("localhost:3000/pets")
+fetch("http://localhost:3000/users")
   .then(response => response.json())
-  .then(console.log(response));
+  .then(function(response) {
+    console.log(response);
+  });
