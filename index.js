@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   getData();
-  document.addEventListener("click", () => {
+  document.addEventListener("click", e => {
+    e.preventDefault();
     if (event.target.dataset.name == "submit") {
       newUserName = document.getElementById("new-user").childNodes[1]
         .childNodes[5].value;
@@ -8,7 +9,13 @@ document.addEventListener("DOMContentLoaded", () => {
         name: newUserName
       };
       newUser(data);
-      // document.getElementById("all-users").innerHTML = "";
+      document.getElementById("all-users").innerHTML = "";
+      getData();
+    } else if (event.target.dataset.name == "homePage") {
+      userid = event.target.dataset.id;
+      homePage(userid);
+    } else if (event.target.dataset.name == "logout") {
+      document.getElementById("all-users").innerHTML = "";
       getData();
     }
   });
@@ -25,8 +32,9 @@ function getData() {
 function displayData(data) {
   add = document.getElementById("all-users");
   add.innerHTML += `<ul>
-  ${data.name}
-  </ul>`;
+  <button data-name="homePage" data-id="${data.id}">Log in as ${
+    data.name
+  }</button></ul>`;
 }
 
 // ----------------------------------------------------------------------
@@ -41,5 +49,27 @@ function newUser(data) {
     body: JSON.stringify(data)
   });
 }
+// ----------------------------------------------------------------------
 
+function homePage(id) {
+  fetch(`http://localhost:3000/users/${id}`)
+    .then(response => response.json())
+    .then(user => displayHomePage(user))
+    .then();
+}
+
+function displayHomePage(user) {
+  pets = user.pets;
+  debugger;
+  document.getElementById("all-users").innerHTML = "";
+  add = document.getElementById("all-users");
+  add.innerHTML += `<h2>${user.name}</h2>
+  <button data-name="logout">Logout</button>`;
+}
+
+// ----------------------------------------------------------------------
+
+function getUserPets() {
+  ["hello", "hello"].map(element => element);
+}
 // ----------------------------------------------------------------------
