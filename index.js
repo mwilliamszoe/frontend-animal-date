@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
   getData();
-  let newuser = false;
+  addUserForm();
+  // let newuser = false;
   document.addEventListener("click", e => {
     e.preventDefault();
     if (event.target.dataset.name == "usersubmit") {
-      debugger;
+      document.getElementById("mainBody").innerHTML += ``;
       newUserName = document.getElementById("new-user").childNodes[1]
         .childNodes[5].value;
       data = {
@@ -15,13 +16,19 @@ document.addEventListener("DOMContentLoaded", () => {
       getData();
     } else if (event.target.dataset.name == "homePage") {
       userid = event.target.dataset.id;
+      document.getElementById("userform").innerHTML = ``;
       homePage(userid);
     } else if (event.target.dataset.name == "logout") {
+      addUserForm();
+      document.getElementById("petsform").innerHTML = ``;
       document.getElementById("all-users").innerHTML = "";
       document.getElementById("pets").innerHTML = "";
       getData();
     } else if (event.target.dataset.name == "petsubmit") {
-      newPet();
+      id = event.target.parentElement.childNodes[1].childNodes[13].value;
+      document.getElementById("petsform").innerHTML = ``;
+      document.getElementById("pets").innerHTML = ``;
+      newPet(id);
     }
   });
 });
@@ -33,6 +40,17 @@ function getData() {
     .then(response => response.json())
     .then(data => data.forEach(element => displayData(element)));
 }
+function addUserForm() {
+  document.getElementById("userform").innerHTML += `
+  <form id="new-user">
+<div class="formgroup">
+    <label>New User</label>
+    <br>
+    <input type="text" class="form-control" id="new-user" placeholder="bob">
+</div>
+<button data-name="usersubmit">Submit</button>
+</form>`;
+}
 
 function displayData(data) {
   add = document.getElementById("all-users");
@@ -40,6 +58,22 @@ function displayData(data) {
   <button data-name="homePage" data-id="${data.id}">Log in as ${
     data.name
   }</button></ul>`;
+}
+
+function addPetsForm(id) {
+  document.getElementById("petsform").innerHTML += `
+  <form id="new-pet">
+        <div>
+            <label>New Pet</label>
+            <br>
+            <input type="text" class="form-control" id="new-pet" placeholder="pebble">
+            <br>
+            <input type="text" class="form-control" id="new-pet" placeholder="type">
+            <br>
+            <input type="hidden" class="form-control" id="new-pet" value="${id}">
+        </div>
+        <button data-name="petsubmit">Submit</button>
+    </form>`;
 }
 
 // ----------------------------------------------------------------------
@@ -65,6 +99,7 @@ function homePage(id) {
 function displayHomePage(user) {
   document.getElementById("all-users").innerHTML = "";
   getUserPets(user.id);
+  addPetsForm(user.id);
   add = document.getElementById("all-users");
   add.innerHTML += `<h2>${user.name}</h2>
   <button data-name="logout">Logout</button>`;
@@ -79,19 +114,18 @@ function getUserPets(id) {
 }
 
 function displayUserPets(pet, id) {
-  if (pet.id == id) {
+  if (pet.user_id == id) {
     document.getElementById("pets").innerHTML += `<p>${pet.name}</p>`;
   }
 }
 // ----------------------------------------------------------------------
 
-function newPet() {
+function newPet(id) {
   data = {
     name: event.target.parentElement.childNodes[1].childNodes[5].value,
     species: event.target.parentElement.childNodes[1].childNodes[9].value,
-    user_id: event.target.parentElement.childNodes[1].childNodes[13].value
+    user_id: id
   };
-  debugger;
   fetch("http://localhost:3000/pets", {
     method: "POST",
     headers: {
@@ -99,7 +133,7 @@ function newPet() {
       Accept: "application/json"
     },
     body: JSON.stringify(data)
-  });
+  }).then(homePage(id));
 }
 
 // ----------------------------------------------------------------------
