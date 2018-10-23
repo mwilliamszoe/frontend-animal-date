@@ -11,15 +11,29 @@
 
 <body>
     <form id="new-user">
-        <div class="form-group">
+        <div class="formgroup">
             <label>New User</label>
             <br>
             <input type="text" class="form-control" id="new-user" placeholder="bob">
         </div>
-        <button data-name="submit">Submit</button>
+        <button data-name="usersubmit">Submit</button>
     </form>
-    <div id="all-users">
+    <form id="new-pet">
+        <div>
+            <label>New Pet</label>
+            <br>
+            <input type="text" class="form-control" id="new-pet" placeholder="pebble">
+            <br>
+            <input type="text" class="form-control" id="new-pet" placeholder="type">
+            <br>
+            <input type="text" class="form-control" id="new-pet" placeholder="user id">
+        </div>
+        <button data-name="petsubmit">Submit</button>
+    </form>
+    <div>
         <div id="pets">
+        </div>
+        <div id="all-users">
         </div>
     </div>
     <script src="index.js">
