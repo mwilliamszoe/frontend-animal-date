@@ -32,6 +32,7 @@ function displayData(data) {
 // ----------------------------------------------------------------------
 
 function newUser(data) {
+  debugger;
   fetch("http://localhost:3000/users", {
     method: "POST",
     headers: {
