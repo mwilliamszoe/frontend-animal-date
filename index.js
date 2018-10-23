@@ -60,8 +60,6 @@ function homePage(id) {
 }
 
 function displayHomePage(user) {
-  pets = user.pets;
-  debugger;
   document.getElementById("all-users").innerHTML = "";
   add = document.getElementById("all-users");
   add.innerHTML += `<h2>${user.name}</h2>
@@ -70,7 +68,4 @@ function displayHomePage(user) {
 
 // ----------------------------------------------------------------------
 
-function getUserPets() {
-  ["hello", "hello"].map(element => element);
-}
 // ----------------------------------------------------------------------
