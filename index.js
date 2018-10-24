@@ -3,18 +3,21 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentPetId;
   getData();
   addUserForm();
+  // userForm = document.getElementById("new-user");
+  // userForm.addEventListener("submit", e => {
+  //   e.preventDefault();
+  // });
+
   document.addEventListener("click", e => {
     e.preventDefault();
     if (event.target.dataset.name == "usersubmit") {
-      document.getElementById("mainBody").innerHTML += "";
       newUserName = document.getElementById("new-user").childNodes[1]
         .childNodes[5].value;
       data = {
         name: newUserName
       };
       newUser(data);
-      document.getElementById("all-users").innerHTML = "";
-      getData();
+      document.getElementById("mainbody").innerHTML += "";
     } else if (event.target.dataset.name == "homePage") {
       userid = event.target.dataset.id;
       currentUserId = userid;
@@ -48,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (event.target.dataset.name == `matchprofile`) {
       id = event.target.dataset.id;
       document.getElementById("matchpets").innerHTML = "";
-      getPetProfile(id);
+      getSampleProfile(id);
     } else if (event.target.dataset.name == `matchedprofiles`) {
       id = event.target.dataset.id;
       document.getElementById("matchpets").innerHTML = "";
@@ -62,9 +65,41 @@ document.addEventListener("DOMContentLoaded", () => {
         event.target.dataset.id,
         currentPetId
       );
+    } else if (event.target.dataset.name == "delete") {
+      id = event.target.dataset.id;
+      deleteUser(id);
+      document.getElementById("all-users").innerHTML += "";
     }
   });
 });
+
+// ----------------------------------------------------------------------
+
+function deleteUser(id) {
+  return fetch(`http://localhost:3000/users/${id}`, {
+    method: "DELETE"
+  });
+}
+// ----------------------------------------------------------------------
+
+function getSampleProfile(id) {
+  fetch(`http://localhost:3000/pets/${id}`)
+    .then(response => response.json())
+    .then(resp => sampleProfile(resp.pet, id))
+    .catch(err => console.log(err));
+}
+function sampleProfile(pet, id) {
+  if (pet.id == id) {
+    document.getElementById("pets").innerHTML += `<h2>${pet.name}</h2>
+    <img src="${pet.image}">
+    <p>Hi! My name is ${pet.name}</p>
+    <p>Species: ${pet.species}</p>
+    <p>Rarity: ${pet.species_availability}</p>
+    <p>Owner: ${pet.ownership}</p>
+    <p>Diet: ${pet.diet}</p>
+    <p>Likes: ${pet.likes}</p>`;
+  }
+}
 
 // ----------------------------------------------------------------------
 
@@ -117,11 +152,6 @@ function updateLike(likedId, likerId) {
 
 // ----------------------------------------------------------------------
 
-function getData() {
-  fetch("http://localhost:3000/users")
-    .then(response => response.json())
-    .then(data => data.forEach(element => displayData(element)));
-}
 function addUserForm() {
   document.getElementById("userform").innerHTML += `
   <form id="new-user">
@@ -131,11 +161,17 @@ function addUserForm() {
 </form>`;
 }
 
-function displayData(data) {
+function getData() {
+  fetch("http://localhost:3000/users")
+    .then(response => response.json())
+    .then(data => data.forEach(user => displayData(user)));
+}
+
+function displayData(user) {
   add = document.getElementById("all-users");
   add.innerHTML += `<ul>
-  <button data-name="homePage" data-id="${data.id}">Log in as ${
-    data.name
+  <button data-name="homePage" data-id="${user.id}">Log in as ${
+    user.name
   }</button></ul>`;
 }
 
@@ -156,6 +192,8 @@ function addPetsForm(id) {
             <input type="text" class="form-control" id="new-diet" placeholder="I eat">
             <br>
             <input type="hidden" class="form-control" id="new-likes" value="${id}">
+            <br>
+            <input type="text" class="form-control" id="new-likes" placeholder="image">
         </div>
         <button data-name="petsubmit">Submit</button>
     </form>`;
@@ -219,7 +257,9 @@ function newUser(data) {
       Accept: "application/json"
     },
     body: JSON.stringify(data)
-  });
+  })
+    .then(() => (document.getElementById("all-users").innerHTML = ""))
+    .then(getData);
 }
 // ----------------------------------------------------------------------
 
@@ -235,7 +275,8 @@ function displayHomePage(user) {
   addPetsForm(user.id);
   add = document.getElementById("all-users");
   add.innerHTML += `<h1>${user.name}</h1>
-  <button data-name="logout">Logout</button>`;
+  <button data-name="logout">Logout</button>
+  <button data-id="${user.id}" data-name="delete">Delete Profile</button>`;
 }
 
 // ----------------------------------------------------------------------
@@ -264,7 +305,8 @@ function newPet(id) {
       event.target.parentElement.childNodes[1].childNodes[13].value,
     ownership: event.target.parentElement.childNodes[1].childNodes[17].value,
     diet: event.target.parentElement.childNodes[1].childNodes[21].value,
-    user_id: event.target.parentElement.childNodes[1].childNodes[25].value
+    user_id: event.target.parentElement.childNodes[1].childNodes[25].value,
+    image: event.target.parentElement.childNodes[1].childNodes[29].value
   };
   data;
   fetch("http://localhost:3000/pets", {
