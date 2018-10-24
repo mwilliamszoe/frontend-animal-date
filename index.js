@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   let currentPetId;
+  let currentUserId;
   getData();
   addUserForm();
   document.addEventListener("click", e => {
@@ -16,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
       getData();
     } else if (event.target.dataset.name == "homePage") {
       userid = event.target.dataset.id;
+      currentUserId = userid;
       document.getElementById("userform").innerHTML = ``;
       document.getElementById("pets").innerHTML = ``;
       homePage(userid);
@@ -49,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
       getPetProfile(id);
     } else if (event.target.dataset.name == `matchedprofiles`) {
       id = event.target.dataset.id;
+      document.getElementById("matchpets").innerHTML = ``;
       getMatches(currentPetId);
     } else if (event.target.dataset.name == `like`) {
       document.getElementById("matchpets").innerHTML = "";
@@ -145,11 +148,17 @@ function addPetsForm(id) {
         <div>
             <label>New Pet</label>
             <br>
-            <input type="text" class="form-control" id="new-pet" placeholder="pebble">
+            <input type="text" class="form-control" id="new-name" placeholder="pebble">
             <br>
-            <input type="text" class="form-control" id="new-pet" placeholder="type">
+            <input type="text" class="form-control" id="new-type" placeholder="species">
             <br>
-            <input type="hidden" class="form-control" id="new-pet" value="${id}">
+            <input type="text" class="form-control" id="new-avalibility" placeholder="species availability">
+            <br>
+            <input type="text" class="form-control" id="new-ownership" placeholder="ownership">
+            <br>
+            <input type="text" class="form-control" id="new-diet" placeholder="I eat">
+            <br>
+            <input type="hidden" class="form-control" id="new-likes" value="${id}">
         </div>
         <button data-name="petsubmit">Submit</button>
     </form>`;
@@ -167,6 +176,10 @@ function viewPetProfile(pet, id) {
   if (pet.id == id) {
     document.getElementById("pets").innerHTML += `<h2>${pet.name}</h2>
     <p>Hi! My name is ${pet.name}</p>
+    <p>Species: ${pet.species}</p>
+    <p>Likes: ${pet.species_availability}</p>
+    <p>Likes: ${pet.ownership}</p>
+    <p>Likes: ${pet.diet}</p>
     <p>Likes: ${pet.likes}</p>
     <button data-id="${
       pet.id
@@ -249,6 +262,10 @@ function newPet(id) {
   data = {
     name: event.target.parentElement.childNodes[1].childNodes[5].value,
     species: event.target.parentElement.childNodes[1].childNodes[9].value,
+    species_availability:
+      event.target.parentElement.childNodes[1].childNodes[17].value,
+    ownership: event.target.parentElement.childNodes[1].childNodes[21].value,
+    diet: event.target.parentElement.childNodes[1].childNodes[25].value,
     user_id: id
   };
   fetch("http://localhost:3000/pets", {
@@ -258,7 +275,7 @@ function newPet(id) {
       Accept: "application/json"
     },
     body: JSON.stringify(data)
-  }).then(homePage(id));
+  }).then(homePage(currentUserId));
 }
 
 // ----------------------------------------------------------------------
