@@ -68,9 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (event.target.dataset.name == "delete") {
       id = event.target.dataset.id;
       deleteUser(id);
-      document.getElementById("mainbody").innerHTML += "";
-      getData();
-      addUserForm();
+      document.getElementById("all-users").innerHTML += "";
     }
   });
 });
@@ -80,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function deleteUser(id) {
   return fetch(`http://localhost:3000/users/${id}`, {
     method: "DELETE"
-  }).then(response => response.json());
+  });
 }
 // ----------------------------------------------------------------------
 
