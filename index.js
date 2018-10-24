@@ -47,10 +47,13 @@ document.addEventListener("DOMContentLoaded", () => {
       id = event.target.dataset.id;
       document.getElementById("matchpets").innerHTML = "";
       getPetProfile(id);
-    } else if (event.target.dataset.name == `matchedprofile`) {
+    } else if (event.target.dataset.name == `matchedprofiles`) {
       id = event.target.dataset.id;
-      // viewMatches(id);
+      getMatches(currentPetId);
     } else if (event.target.dataset.name == `like`) {
+      document.getElementById("matchpets").innerHTML = "";
+      id = event.target.dataset.id;
+      getPetProfile(id);
       updateLike(
         event.target.dataset.likes,
         event.target.dataset.id,
@@ -59,6 +62,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+// ----------------------------------------------------------------------
+
+function getMatches(id) {
+  fetch("http://localhost:3000/likes")
+    .then(response => response.json())
+    .then(data => data.forEach(like => viewMatches(like, id)));
+}
+
+function viewMatches(like, id) {
+  if (like.liker_id == id) {
+    fetch(`http://localhost:3000/pets`)
+      .then(response => response.json())
+      .then(pets => pets.forEach(pet => displayAllLikes(pet, like.liked_id)));
+  }
+}
+
+function displayAllLikes(pet, id) {
+  if (pet.id == id) {
+    add = document.getElementById("matchpets");
+    add.innerHTML += `<h3>
+    ${pet.name}
+    </h3>
+    `;
+  }
+}
 
 // ----------------------------------------------------------------------
 
@@ -135,7 +164,6 @@ function getPetProfile(id) {
     .catch(err => console.log(err));
 }
 function viewPetProfile(pet, id) {
-  debugger;
   if (pet.id == id) {
     document.getElementById("pets").innerHTML += `<h2>${pet.name}</h2>
     <p>Hi! My name is ${pet.name}</p>
@@ -161,7 +189,6 @@ function displayAllPets(pet, id) {
     add.innerHTML += `<h3>
     ${pet.name}
     <p id="${id}">${pet.likes}</p>
-
     <button data-id="${pet.id}" data-name="like" data-likes="${
       pet.likes
     }"> Like ❤️</button>
