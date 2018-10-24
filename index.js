@@ -11,8 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("click", e => {
     e.preventDefault();
     if (event.target.dataset.name == "usersubmit") {
-      newUserName = document.getElementById("new-user").childNodes[1]
-        .childNodes[5].value;
+      newUserName = document.getElementById("new-user").childNodes[3].value;
       data = {
         name: newUserName
       };
@@ -68,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (event.target.dataset.name == "delete") {
       id = event.target.dataset.id;
       deleteUser(id);
-      document.getElementById("all-users").innerHTML += "";
+      document.getElementById("weird").innerHTML += "";
     }
   });
 });
@@ -157,8 +156,8 @@ function addUserForm() {
   <form id="new-user">
     <label id="new-user-label">New User</label>
     <input type="text" class="form-control" id="new-user" placeholder="username">
-    <button data-name="usersubmit">Submit</button>
-  </form>`;
+<button data-name="usersubmit">Submit</button>
+</form>`;
 }
 
 function getData() {
