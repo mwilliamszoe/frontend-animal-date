@@ -67,7 +67,14 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (event.target.dataset.name == "delete") {
       id = event.target.dataset.id;
       deleteUser(id);
-      document.getElementById("weird").innerHTML += "";
+      document.getElementById("all-users").innerHTML = "";
+      document.getElementById("petsform").innerHTML = "";
+    } else if (event.target.dataset.name == "deletepet") {
+      id = event.target.dataset.id;
+      deletePets(id);
+      document.getElementById("petsform").innerHTML = "";
+      document.getElementById("pets").innerHTML = "";
+      homePage(currentUserId);
     }
   });
 });
@@ -77,8 +84,17 @@ document.addEventListener("DOMContentLoaded", () => {
 function deleteUser(id) {
   return fetch(`http://localhost:3000/users/${id}`, {
     method: "DELETE"
+  })
+    .then(addUserForm)
+    .then(getData);
+}
+
+function deletePets(id) {
+  return fetch(`http://localhost:3000/pets/${id}`, {
+    method: "DELETE"
   });
 }
+
 // ----------------------------------------------------------------------
 
 function getSampleProfile(id) {
@@ -291,6 +307,7 @@ function displayUserPets(pet, id) {
     document.getElementById("pets").innerHTML += `<p>${pet.name}</p>
     <button data-id='${pet.id}' 
     data-name="profile">${pet.name}'s profile</button>
+    <button data-id="${pet.id}" data-name="deletepet">Delete Pet</button>
     `;
   }
 }
