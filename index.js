@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  let currentPetId;
   getData();
   addUserForm();
   document.addEventListener("click", e => {
@@ -31,22 +32,56 @@ document.addEventListener("DOMContentLoaded", () => {
       newPet(id);
     } else if (event.target.dataset.name == "profile") {
       document.getElementById("pets").innerHTML = "";
-      getPetProfile(event.target.dataset.id);
+      currentPetId = event.target.dataset.id;
+      getPetProfile(currentPetId);
     } else if (event.target.dataset.name == "back") {
       document.getElementById("pets").innerHTML = "";
       document.getElementById("petsform").innerHTML = ``;
       document.getElementById("matchpets").innerHTML = "";
       homePage(userid);
     } else if (event.target.dataset.name == "match") {
+      document.getElementById("matchpets").innerHTML = "";
       id = event.target.dataset.id;
       getAllPets(id);
     } else if (event.target.dataset.name == `matchprofile`) {
-      document.getElementById("matchpets").innerHTML = "";
       id = event.target.dataset.id;
+      document.getElementById("matchpets").innerHTML = "";
       getPetProfile(id);
+    } else if (event.target.dataset.name == `matchedprofile`) {
+      id = event.target.dataset.id;
+      // viewMatches(id);
+    } else if (event.target.dataset.name == `like`) {
+      updateLike(
+        event.target.dataset.likes,
+        event.target.dataset.id,
+        currentPetId
+      );
     }
   });
 });
+
+// ----------------------------------------------------------------------
+
+function updateLike(like, likedId, likerId) {
+  let data = {
+    liker_id: likerId,
+    liked_id: likedId
+  };
+  fetch(`http://localhost:3000/pets/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+    .then(res => {
+      console.log(res.json());
+    })
+    .catch(err => {
+      console.error(err);
+    });
+}
 
 // ----------------------------------------------------------------------
 
@@ -96,12 +131,18 @@ function addPetsForm(id) {
 function getPetProfile(id) {
   fetch(`http://localhost:3000/pets/${id}`)
     .then(response => response.json())
-    .then(pet => viewPetProfile(pet, id));
+    .then(resp => viewPetProfile(resp.pet, id))
+    .catch(err => console.log(err));
 }
 function viewPetProfile(pet, id) {
+  debugger;
   if (pet.id == id) {
     document.getElementById("pets").innerHTML += `<h2>${pet.name}</h2>
     <p>Hi! My name is ${pet.name}</p>
+    <p>Likes: ${pet.likes}</p>
+    <button data-id="${
+      pet.id
+    }" data-name="matchedprofiles">View liked profiles</button>
     <button data-id="${pet.id}" data-name="match">Match ${
       pet.name
     } with local pets</button>
@@ -119,7 +160,11 @@ function displayAllPets(pet, id) {
     add = document.getElementById("matchpets");
     add.innerHTML += `<h3>
     ${pet.name}
-    <button data-name="like">Like ❤️</button>
+    <p id="${id}">${pet.likes}</p>
+
+    <button data-id="${pet.id}" data-name="like" data-likes="${
+      pet.likes
+    }"> Like ❤️</button>
     <button data-id="${pet.id}"data-name="matchprofile">View</button>
     </h3>
     `;
