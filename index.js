@@ -122,11 +122,8 @@ function getData() {
 function addUserForm() {
   document.getElementById("userform").innerHTML += `
   <form id="new-user">
-<div class="formgroup">
-    <label>New User</label>
-    <br>
+    <label id="new-user-label">New User</label>
     <input type="text" class="form-control" id="new-user" placeholder="bob">
-</div>
 <button data-name="usersubmit">Submit</button>
 </form>`;
 }
