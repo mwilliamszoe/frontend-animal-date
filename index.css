@@ -3,6 +3,11 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
+  font-family: "Mali", cursive;
+}
+
+header {
+  order: 1; /* default is 0 */
 }
 
 #userform {
@@ -29,10 +34,19 @@ label#new-user-label {
 input#new-user {
   height: 50px;
   width: 350px;
+  font-size: 1.1rem;
 }
 
 button {
   height: 50px;
+  font-size: 1.35rem;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
 }
 
 /* form#new-user {
