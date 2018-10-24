@@ -156,9 +156,9 @@ function addUserForm() {
   document.getElementById("userform").innerHTML += `
   <form id="new-user">
     <label id="new-user-label">New User</label>
-    <input type="text" class="form-control" id="new-user" placeholder="Username">
-<button data-name="usersubmit">Submit</button>
-</form>`;
+    <input type="text" class="form-control" id="new-user" placeholder="username">
+    <button data-name="usersubmit">Submit</button>
+  </form>`;
 }
 
 function getData() {

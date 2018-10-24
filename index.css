@@ -6,10 +6,6 @@ body {
   font-family: "Mali", cursive;
 }
 
-header {
-  order: 1; /* default is 0 */
-}
-
 #userform {
   background-color: #f3f2ef;
   border-radius: 3px;
