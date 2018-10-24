@@ -80,7 +80,7 @@ function getUserPets(id) {
 }
 
 function displayUserPets(pet, id) {
-  if (pet.id == id) {
+  if (pet.user.id == id) {
     document.getElementById("pets").innerHTML += `<p>${pet.name}</p>`;
   }
 }
