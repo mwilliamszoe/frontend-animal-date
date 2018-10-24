@@ -165,16 +165,11 @@ function getUserPets(id) {
 }
 
 function displayUserPets(pet, id) {
-<<<<<<< HEAD
-  if (pet.user.id == id) {
-    document.getElementById("pets").innerHTML += `<p>${pet.name}</p>`;
-=======
   if (pet.user_id == id) {
     document.getElementById("pets").innerHTML += `<p>${pet.name}</p>
     <button data-id='${pet.id}' 
     data-name="profile">${pet.name}'s profile</button>
     `;
->>>>>>> 4ccf704f04f070cd490a952289cd18ab2f5d1af9
   }
 }
 // ----------------------------------------------------------------------
