@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("pets").innerHTML = "";
       getData();
     } else if (event.target.dataset.name == "petsubmit") {
-      id = event.target.parentElement.childNodes[1].childNodes[13].value;
+      id = event.target.parentElement.childNodes[13].value;
       document.getElementById("petsform").innerHTML = "";
       document.getElementById("pets").innerHTML = "";
       newPet(id);
@@ -193,7 +193,6 @@ function displayData(user) {
 function addPetsForm(id) {
   document.getElementById("petsform").innerHTML += `
   <form id="new-pet">
-        <div>
             <label>New Pet</label>
             <br>
             <input type="text" class="form-control" id="new-name" placeholder="pebble">
@@ -209,7 +208,6 @@ function addPetsForm(id) {
             <input type="hidden" class="form-control" id="new-likes" value="${id}">
             <br>
             <input type="text" class="form-control" id="new-likes" placeholder="image">
-        </div>
         <button data-name="petsubmit">Submit</button>
     </form>`;
 }
@@ -314,17 +312,17 @@ function displayUserPets(pet, id) {
 // ----------------------------------------------------------------------
 
 function newPet(id) {
+  debugger;
   data = {
-    name: event.target.parentElement.childNodes[1].childNodes[5].value,
-    species: event.target.parentElement.childNodes[1].childNodes[9].value,
-    species_availability:
-      event.target.parentElement.childNodes[1].childNodes[13].value,
-    ownership: event.target.parentElement.childNodes[1].childNodes[17].value,
-    diet: event.target.parentElement.childNodes[1].childNodes[21].value,
-    user_id: event.target.parentElement.childNodes[1].childNodes[25].value,
-    image: event.target.parentElement.childNodes[1].childNodes[29].value
+    name: event.target.parentElement.childNodes[5].value,
+    species: event.target.parentElement.childNodes[9].value,
+    species_availability: event.target.parentElement.childNodes[13].value,
+    ownership: event.target.parentElement.childNodes[17].value,
+    diet: event.target.parentElement.childNodes[21].value,
+    user_id: event.target.parentElement.childNodes[25].value,
+    image: event.target.parentElement.childNodes[29].value
   };
-  data;
+  debugger;
   fetch("http://localhost:3000/pets", {
     method: "POST",
     headers: {
