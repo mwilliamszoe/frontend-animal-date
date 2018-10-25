@@ -21,6 +21,7 @@ header {
   text-align: center;
   height: 250px;
   padding-top: 15px;
+  margin-bottom: 100px;
 }
 
 #userform {
@@ -35,6 +36,10 @@ form#new-user {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+}
+
+#usersubmit-btn {
+  margin-top: 100px;
 }
 
 button.login-btn {

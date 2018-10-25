@@ -173,7 +173,7 @@ function addUserForm() {
   <form id="new-user">
     <label id="new-user-label"><strong>New User</strong></label>
     <input type="text" class="form-control" id="new-user" placeholder="username">
-<button data-name="usersubmit">Submit</button>
+<button data-name="usersubmit" id="usersubmit-btn">Submit</button>
 </form>`;
 }
 
