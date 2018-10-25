@@ -150,3 +150,11 @@ div#matchpets {
   font-size: 15px;
   align-self: center;
 }
+
+.matchprofile-view-btn {
+  width: 25%;
+  height: 25px;
+  font-size: 15px;
+  align-self: center;
+  padding-bottom: 10px;
+}

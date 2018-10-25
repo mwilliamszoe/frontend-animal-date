@@ -61,12 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (event.target.dataset.name == `like`) {
       document.getElementById("matchpets").innerHTML = "";
       id = event.target.dataset.id;
-      getPetProfile(id);
-      updateLike(
-        event.target.dataset.likes,
-        event.target.dataset.id,
-        currentPetId
-      );
+      // debugger;
+      updateLike(event.target.dataset.id, currentPetId);
     } else if (event.target.dataset.name == "delete") {
       id = event.target.dataset.id;
       deleteUser(id);
@@ -153,6 +149,7 @@ function updateLike(likedId, likerId) {
     liker_id: likerId,
     liked_id: likedId
   };
+  // debugger;
   fetch(`http://localhost:3000/pets/${id}`, {
     method: "PATCH",
     headers: {
@@ -255,13 +252,13 @@ function displayAllPets(pet, id) {
     add = document.getElementById("matchpets");
     add.innerHTML += `
     ${pet.name}
-    <p id="${id}" class="match-pets-info">${pet.likes}</p>
+    <p id="${id}" class="match-pets-info">Current #Likes: ${pet.likes}</p>
     <button data-id="${pet.id}" data-name="like" data-likes="${
       pet.likes
     }" class="matchprofile-btn"> Like ❤️</button>
     <button data-id="${
       pet.id
-    }"data-name="matchprofile" class="matchprofile-btn">View</button>
+    }"data-name="matchprofile" class="matchprofile-view-btn">View</button>
     `;
   }
 }
