@@ -28,11 +28,14 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("petsform").innerHTML = "";
       document.getElementById("all-users").innerHTML = "";
       document.getElementById("pets").innerHTML = "";
+      // document.getElementById("user-page").innerHTML = ""; // chelsea did this
       getData();
     } else if (event.target.dataset.name == "petsubmit") {
-      id = event.target.parentElement.childNodes[1].childNodes[13].value;
+      id = event.target.parentElement.childNodes[13].value;
       document.getElementById("petsform").innerHTML = "";
       document.getElementById("pets").innerHTML = "";
+      // document.getElementById("user-page").innerHTML = ""; // chelsea did this
+
       newPet(id);
     } else if (event.target.dataset.name == "profile") {
       document.getElementById("pets").innerHTML = "";
@@ -69,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
       deleteUser(id);
       document.getElementById("all-users").innerHTML = "";
       document.getElementById("petsform").innerHTML = "";
+      // document.getElementById("user-page").innerHTML = ""; // chelsea did this
     } else if (event.target.dataset.name == "deletepet") {
       id = event.target.dataset.id;
       deletePets(id);
@@ -135,9 +139,9 @@ function viewMatches(like, id) {
 function displayAllLikes(pet, id) {
   if (pet.id == id) {
     add = document.getElementById("matchpets");
-    add.innerHTML += `<h3>
+    add.innerHTML += `<p class="match-pets-name">
     ${pet.name}
-    </h3>
+    <p>
     `;
   }
 }
@@ -170,7 +174,7 @@ function updateLike(likedId, likerId) {
 function addUserForm() {
   document.getElementById("userform").innerHTML += `
   <form id="new-user">
-    <label id="new-user-label">New User</label>
+    <label id="new-user-label"><strong>New User</strong></label>
     <input type="text" class="form-control" id="new-user" placeholder="username">
 <button data-name="usersubmit">Submit</button>
 </form>`;
@@ -184,33 +188,32 @@ function getData() {
 
 function displayData(user) {
   add = document.getElementById("all-users");
-  add.innerHTML += `<ul>
-  <button data-name="homePage" data-id="${user.id}">Log in as ${
-    user.name
-  }</button></ul>`;
+  add.innerHTML += `
+  <button class="login-btn" data-name="homePage" data-id="${
+    user.id
+  }">Log in as ${user.name}</button>`;
 }
 
 function addPetsForm(id) {
   document.getElementById("petsform").innerHTML += `
   <form id="new-pet">
-        <div>
-            <label>New Pet</label>
-            <br>
-            <input type="text" class="form-control" id="new-name" placeholder="pebble">
-            <br>
-            <input type="text" class="form-control" id="new-type" placeholder="species">
-            <br>
-            <input type="text" class="form-control" id="new-avalibility" placeholder="species availability">
-            <br>
-            <input type="text" class="form-control" id="new-ownership" placeholder="ownership">
-            <br>
-            <input type="text" class="form-control" id="new-diet" placeholder="I eat">
-            <br>
-            <input type="hidden" class="form-control" id="new-likes" value="${id}">
-            <br>
-            <input type="text" class="form-control" id="new-likes" placeholder="image">
-        </div>
-        <button data-name="petsubmit">Submit</button>
+        
+            <label id="new-pet-label">New Pet</label>
+            <input type="text" class="new-pet-input" id="new-name" placeholder="pebble">
+            
+            <input type="text" class="new-pet-input" id="new-type" placeholder="species">
+            
+            <input type="text" class="new-pet-input" id="new-avalibility" placeholder="species availability">
+            
+            <input type="text" class="new-pet-input" id="new-ownership" placeholder="ownership">
+            
+            <input type="text" class="new-pet-input" id="new-diet" placeholder="I eat">
+            
+            <input type="hidden" class="new-pet-input" id="new-likes" value="${id}">
+            
+            <input type="text" class="new-pet-input" id="new-likes" placeholder="image">
+        
+        <button data-name="petsubmit" id="pet-submit">Submit</button>
     </form>`;
 }
 
@@ -234,11 +237,11 @@ function viewPetProfile(pet, id) {
     <p>Likes: ${pet.likes}</p>
     <button data-id="${
       pet.id
-    }" data-name="matchedprofiles">View liked profiles</button>
-    <button data-id="${pet.id}" data-name="match">Match ${
+    }" data-name="matchedprofiles" class="profile-btn">View liked profiles</button>
+    <button data-id="${pet.id}" data-name="match" class="profile-btn">Match ${
       pet.name
     } with local pets</button>
-    <button data-name="back">back</buttom>`;
+    <button data-name="back" class="profile-btn">back</buttom>`;
   }
 }
 
@@ -250,14 +253,15 @@ function getAllPets(id) {
 function displayAllPets(pet, id) {
   if (pet.id != id) {
     add = document.getElementById("matchpets");
-    add.innerHTML += `<h3>
+    add.innerHTML += `
     ${pet.name}
-    <p id="${id}">${pet.likes}</p>
+    <p id="${id}" class="match-pets-info">${pet.likes}</p>
     <button data-id="${pet.id}" data-name="like" data-likes="${
       pet.likes
-    }"> Like ❤️</button>
-    <button data-id="${pet.id}"data-name="matchprofile">View</button>
-    </h3>
+    }" class="matchprofile-btn"> Like ❤️</button>
+    <button data-id="${
+      pet.id
+    }"data-name="matchprofile" class="matchprofile-btn">View</button>
     `;
   }
 }
@@ -289,10 +293,36 @@ function displayHomePage(user) {
   getUserPets(user.id);
   addPetsForm(user.id);
   add = document.getElementById("all-users");
-  add.innerHTML += `<h1>${user.name}</h1>
-  <button data-name="logout">Logout</button>
-  <button data-id="${user.id}" data-name="delete">Delete Profile</button>`;
+  add.innerHTML += `<button data-name="logout" class="profile-btn">Logout</button>
+  <button data-id="${
+    user.id
+  }" data-name="delete"class="profile-btn">Delete Profile</button>
+  <p>${user.name}'s Pets</p>
+`;
 }
+
+// function displayHomePage(user) {
+//   document.getElementById("all-users").innerHTML = "";
+//   getUserPets(user.id);
+//   addPetsForm(user.id);
+//   let userPage = document.createElement("div");
+//   userPage.id = "user-page";
+//   userPage.innerHTML = `<h1>${user.name}</h1>
+//   <button data-name="logout" class="all-users-btn">Logout</button>
+//   <button data-id="${
+//     user.id
+//   }" data-name="delete" class="all-users-btn">Delete Profile</button>`;
+//   let outerDiv = document.getElementById("form-box");
+//   let pets = document.getElementById("pets");
+//   outerDiv.insertBefore(userPage, pets);
+
+// add = document.getElementById("all-users");
+// add.innerHTML += `<h1>${user.name}</h1>
+// <button data-name="logout" class="all-users-btn">Logout</button>
+// <button data-id="${
+//   user.id
+// }" data-name="delete" class="all-users-btn">Delete Profile</button>`;
+// }
 
 // ----------------------------------------------------------------------
 
@@ -305,9 +335,11 @@ function getUserPets(id) {
 function displayUserPets(pet, id) {
   if (pet.user_id == id) {
     document.getElementById("pets").innerHTML += `<p>${pet.name}</p>
-    <button data-id='${pet.id}' 
+    <button class="profile-btn" data-id='${pet.id}' 
     data-name="profile">${pet.name}'s profile</button>
-    <button data-id="${pet.id}" data-name="deletepet">Delete Pet</button>
+    <button class="profile-btn" data-id="${
+      pet.id
+    }" data-name="deletepet">Delete Pet</button>
     `;
   }
 }
@@ -315,16 +347,15 @@ function displayUserPets(pet, id) {
 
 function newPet(id) {
   data = {
-    name: event.target.parentElement.childNodes[1].childNodes[5].value,
-    species: event.target.parentElement.childNodes[1].childNodes[9].value,
-    species_availability:
-      event.target.parentElement.childNodes[1].childNodes[13].value,
-    ownership: event.target.parentElement.childNodes[1].childNodes[17].value,
-    diet: event.target.parentElement.childNodes[1].childNodes[21].value,
-    user_id: event.target.parentElement.childNodes[1].childNodes[25].value,
-    image: event.target.parentElement.childNodes[1].childNodes[29].value
+    name: event.target.parentElement.childNodes[3].value,
+    species: event.target.parentElement.childNodes[5].value,
+    species_availability: event.target.parentElement.childNodes[7].value,
+    ownership: event.target.parentElement.childNodes[9].value,
+    diet: event.target.parentElement.childNodes[11].value,
+    user_id: event.target.parentElement.childNodes[13].value,
+    image: event.target.parentElement.childNodes[15].value
   };
-  data;
+  // data;
   fetch("http://localhost:3000/pets", {
     method: "POST",
     headers: {
