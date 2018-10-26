@@ -106,7 +106,7 @@ function getSampleProfile(id) {
 function sampleProfile(pet, id) {
   if (pet.id == id) {
     document.getElementById("pets").innerHTML += `<h2>${pet.name}</h2>
-    <img src="${pet.image}">
+    <img src="${pet.image}" width="250px">
     <p>Hi! My name is ${pet.name}</p>
     <p>Species: ${pet.species}</p>
     <p>Rarity: ${pet.species_availability}</p>
@@ -294,7 +294,7 @@ function displayHomePage(user) {
   <button data-id="${
     user.id
   }" data-name="delete"class="profile-btn">Delete Profile</button>
-  <p>${user.name}'s Pets</p>
+  
 `;
 }
 
@@ -343,7 +343,6 @@ function displayUserPets(pet, id) {
 // ----------------------------------------------------------------------
 
 function newPet(id) {
-  debugger;
   data = {
     name: event.target.parentElement.childNodes[3].value,
     species: event.target.parentElement.childNodes[5].value,
