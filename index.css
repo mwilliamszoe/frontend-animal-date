@@ -141,8 +141,7 @@ label#new-pet-label {
 div#form-box {
   position: absolute;
   text-align: center;
-  bottom: -19px;
-  /* bottom: 50px; */
+  bottom: -60px;
 }
 
 form#new-pet {

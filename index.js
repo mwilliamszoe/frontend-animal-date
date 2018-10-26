@@ -261,7 +261,7 @@ function viewPetProfile(pet, id) {
     <button data-id="${pet.id}" data-name="match" class="profile-btn">Match ${
       pet.name
     }</button>
-    <button data-name="back" class="profile-btn">back</buttom>`;
+    <button data-name="back" class="profile-btn">Back</buttom>`;
   }
 }
 
