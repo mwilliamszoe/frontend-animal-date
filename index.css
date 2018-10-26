@@ -160,6 +160,8 @@ div#matchpets {
   padding-top: 33px;
   display: flex;
   flex-direction: column;
+  position: absolute;
+  left: 73px;
 }
 
 .match-pets-info {
