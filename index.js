@@ -71,6 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       homePage(currentUserId);
     } else if (event.target.dataset.name == "unLike") {
       id = event.target.dataset.id;
+      document.getElementById("matchpets").innerHTML = "";
       getLike(id);
     }
   });
