@@ -39,7 +39,7 @@ form#new-user {
 }
 
 #usersubmit-btn {
-  margin-top: 100px;
+  margin-top: 150px;
 }
 
 button.login-btn {
@@ -59,9 +59,9 @@ input#new-user {
 }
 
 div#all-users {
-  margin-top: 180px;
-  padding-right: -16px;
-  z-index: -1;
+  margin-top: 200px;
+  padding-right: 0px;
+  z-index: 1;
 }
 
 button {
