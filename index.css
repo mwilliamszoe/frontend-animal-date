@@ -19,10 +19,6 @@ header {
   color: #e0dcdc;
   width: 100%;
   text-align: center;
-  /* height: 250px; */
-  height: 177px;
-  padding-top: 15px;
-  margin-bottom: 100px;
 }
 
 /* #userform {
@@ -51,14 +47,38 @@ form#new-user {
   justify-content: space-evenly;
 }
 
-#usersubmit-btn {
-  margin-top: 25px;
-}
-
-button.login-btn {
+.profile-btn {
   font-size: 15px;
   height: 25px;
   width: 150px;
+}
+
+#usersubmit-btn {
+  /* margin-top: 25px; */
+  height: 50px;
+  font-size: 20px;
+  margin-top: 20px;
+  width: 358px;
+}
+
+button#pet-submit {
+  height: 33px;
+  width: 157px;
+}
+
+button {
+  height: 25px;
+  font-size: 15px;
+  background-color: #ffeb3be6;
+  border-radius: 0.3rem;
+  width: 150px;
+}
+
+.matchprofile-btn {
+  width: 25%;
+  height: 25px;
+  font-size: 15px;
+  align-self: center;
 }
 
 label#new-user-label {
@@ -82,12 +102,12 @@ div#all-users {
   bottom: 200px;
   right: 500px;
 }
-
-button {
-  height: 50px;
-  font-size: 1.35rem;
-  background-color: #ffeb3be6;
-  border-radius: 0.3rem;
+.matchprofile-view-btn {
+  width: 25%;
+  height: 25px;
+  font-size: 15px;
+  align-self: center;
+  padding-bottom: 10px;
 }
 
 input:-webkit-autofill,
@@ -121,24 +141,8 @@ label#new-pet-label {
 div#form-box {
   position: absolute;
   text-align: center;
-  bottom: -17px;
+  bottom: -19px;
   /* bottom: 50px; */
-}
-
-.profile-btn {
-  font-size: 15px;
-  height: 25px;
-  width: 150px;
-}
-
-button#pet-submit {
-  font-size: 15px;
-  height: 33px;
-}
-
-.all-users-btn {
-  font-size: 15px;
-  height: 25px;
 }
 
 form#new-pet {
@@ -167,17 +171,6 @@ div#matchpets {
   margin: 10px;
 }
 
-.matchprofile-btn {
-  width: 25%;
-  height: 25px;
-  font-size: 15px;
-  align-self: center;
-}
-
-.matchprofile-view-btn {
-  width: 25%;
-  height: 25px;
-  font-size: 15px;
-  align-self: center;
-  padding-bottom: 10px;
+img {
+  width: 250px;
 }

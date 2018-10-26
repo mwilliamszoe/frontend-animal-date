@@ -120,7 +120,7 @@ function getSampleProfile(id) {
 function sampleProfile(pet, id) {
   if (pet.id == id) {
     document.getElementById("pets").innerHTML += `<h2>${pet.name}</h2>
-    <img src="${pet.image}" width="250px">
+    <img src="${pet.image}">
     <p>Hi! My name is ${pet.name}</p>
     <p>Species: ${pet.species}</p>
     <p>Rarity: ${pet.species_availability}</p>
@@ -253,7 +253,7 @@ function viewPetProfile(pet, id) {
     }" data-name="matchedprofiles" class="profile-btn">View liked profiles</button>
     <button data-id="${pet.id}" data-name="match" class="profile-btn">Match ${
       pet.name
-    } with local pets</button>
+    }</button>
     <button data-name="back" class="profile-btn">back</buttom>`;
   }
 }
