@@ -74,8 +74,13 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("matchpets").innerHTML = "";
       getLike(id);
     }
+    // else if (event.target.dataset.name == "meetUp") {
+    //   debugger;
+    // }
   });
 });
+
+// ----------------------------------------------------------------------
 
 // ----------------------------------------------------------------------
 
@@ -151,10 +156,11 @@ function displayAllLikes(pet, id) {
   if (pet.id == id) {
     add = document.getElementById("matchpets");
     add.innerHTML += `<p class="match-pets-name">
+    <img src="${pet.image}" width="250" height="200">
+    <br>
     ${pet.name}
-    <p><button data-id="${pet.id}" data-name="unLike">UnLike ${
-      pet.name
-    }</button>
+    <p><button data-name="meetUp">Meet ${pet.name}</button>
+    <button data-id="${pet.id}" data-name="unLike">UnLike ${pet.name}</button>
     `;
   }
 }
