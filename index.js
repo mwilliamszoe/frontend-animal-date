@@ -3,11 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentPetId;
   getData();
   addUserForm();
-  // userForm = document.getElementById("new-user");
-  // userForm.addEventListener("submit", e => {
-  //   e.preventDefault();
-  // });
-
   document.addEventListener("click", e => {
     e.preventDefault();
     if (event.target.dataset.name == "usersubmit") {
@@ -61,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (event.target.dataset.name == `like`) {
       document.getElementById("matchpets").innerHTML = "";
       id = event.target.dataset.id;
-      // debugger;
       updateLike(event.target.dataset.id, currentPetId);
     } else if (event.target.dataset.name == "delete") {
       id = event.target.dataset.id;
@@ -75,9 +69,29 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("petsform").innerHTML = "";
       document.getElementById("pets").innerHTML = "";
       homePage(currentUserId);
+    } else if (event.target.dataset.name == "unLike") {
+      id = event.target.dataset.id;
+      getLike(id);
     }
   });
 });
+
+// ----------------------------------------------------------------------
+
+function getLike(id) {
+  fetch(`http://localhost:3000/likes`)
+    .then(resp => resp.json())
+    .then(likes => likes.forEach(like => unLike(like, id)));
+}
+
+function unLike(like, id) {
+  debugger;
+  if (like.liked_id == id) {
+    return fetch(`http://localhost:3000/likes/${like.id}`, {
+      method: "DELETE"
+    });
+  }
+}
 
 // ----------------------------------------------------------------------
 
@@ -137,7 +151,9 @@ function displayAllLikes(pet, id) {
     add = document.getElementById("matchpets");
     add.innerHTML += `<p class="match-pets-name">
     ${pet.name}
-    <p>
+    <p><button data-id="${pet.id}" data-name="unLike">UnLike ${
+      pet.name
+    }</button>
     `;
   }
 }
